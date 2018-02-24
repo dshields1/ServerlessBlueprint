@@ -15,7 +15,7 @@ Download and setup the AWS CLI tool if you haven't already.
 
 `$ cd ServerlessBlueprint`
 
-`$ ./blueprint.sh`
+`$ ./bootstrap.sh`
 
 
 ## Future Improvements
