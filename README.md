@@ -12,7 +12,9 @@ The code is stored in a CodeCommit repository. CodePipeline tracks changes to th
 Download and setup the AWS CLI tool if you haven't already.
 
 `$ git clone https://github.com/dshields1/ServerlessBlueprint.git`
+
 `$ cd ServerlessBlueprint`
+
 `$ ./blueprint.sh`
 
 
