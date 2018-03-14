@@ -1,3 +1,7 @@
 export function handler(event, context, callback) {
-    callback(null, 'Hello world!');
+    callback(null, {
+        statusCode: 200,
+        headers: {},
+        body: 'Hello world!'
+    })
 }
