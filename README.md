@@ -20,6 +20,7 @@ Download and setup the AWS CLI tool if you haven't already.
 
 ## Future Improvements
 
+1. Allow using Github repo instead of CodeCommit
 1. Move to a node command line tool instead of a bash script
-2. Add a test stage to pipeline, or test in the build action
-3. Add more sample resources to the base application
+1. Add a test stage to pipeline, or test in the build action
+1. Add more sample resources to the base application
