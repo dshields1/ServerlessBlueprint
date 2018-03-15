@@ -18,9 +18,14 @@ Download and setup the AWS CLI tool if you haven't already.
 `$ ./bootstrap.sh`
 
 
+## Using GitHub instead of CodeCommit
+When running the bootstrap script, you'll be given the option to use a GitHub repo.
+
+In order to connect CodePipeline to GitHub, you'll need to provide an OAuth Token. You can create one with this link https://github.com/settings/tokens/new.
+
+
 ## Future Improvements
 
-1. Allow using Github repo instead of CodeCommit
 1. Move to a node command line tool instead of a bash script
 1. Add a test stage to pipeline, or test in the build action
 1. Add more sample resources to the base application
