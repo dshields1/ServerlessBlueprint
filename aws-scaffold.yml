@@ -3,9 +3,31 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: AWS Scaffold Project.
 
 Parameters:
+  RepositoryType:
+    Type: String
+    Default: CodeCommit
+    AllowedValues:
+      - CodeCommit
+      - Github
+    Description: The name of the git hosting service used for the application code.
+  GithubRepo:
+    Type: String
+    Default: ''
+    Description: The name of the Github repository. If not using Github, leave this blank.
+  GithubOwner:
+    Type: String
+    Default: ''
+    Description: The owner of the Github repository. If not using Github, leave this blank.
+  GithubToken:
+    Type: String
+    Default: ''
+    Description: An OAuthToken for the Github repository. If not using Github, leave this blank.
   ProjectName:
     Description: The name of the project.
     Type: String
+
+Conditions:
+  UseCodeCommit: !Equals [ !Ref RepositoryType, CodeCommit ]
 
 Resources:
   ArtifactBucket:
@@ -18,6 +40,7 @@ Resources:
 
   CodeCommitRepo:
     Type: "AWS::CodeCommit::Repository"
+    Condition: UseCodeCommit
     Properties: 
       RepositoryDescription: String
       RepositoryName:
@@ -214,20 +237,28 @@ Resources:
           Name: Source
           Actions:
             -
-              Name: PullFromCodeCommit
+              Name: PullFromRepository
               ActionTypeId:
                 Category: Source
-                Owner: AWS
+                Owner: !If [UseCodeCommit, AWS, ThirdParty]
                 Version: "1"
-                Provider: CodeCommit
+                Provider: !If [UseCodeCommit, CodeCommit, GitHub]
               OutputArtifacts:
               - Name: SourceArtifact
               Configuration:
-                BranchName: master
-                RepositoryName:
-                  Fn::GetAtt:
-                    - CodeCommitRepo
-                    - Name
+                !If
+                  - UseCodeCommit
+                  -
+                    BranchName: master
+                    RepositoryName:
+                      Fn::GetAtt:
+                        - CodeCommitRepo
+                        - Name
+                  -
+                    Branch: master
+                    Repo: !Ref GithubRepo
+                    Owner: !Ref GithubOwner
+                    OAuthToken: !Ref GithubToken
         -
           Name: Build
           Actions:
