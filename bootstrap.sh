@@ -18,7 +18,7 @@ if [ "$useGithub" == "yes" ]; then
     read -p 'Github repo name: ' githubRepoName
     read -p 'Github username: ' githubUsername
     read -p 'Github token: ' githubToken
-    githubRepoUrl="https://github.com/$githubRepoName/$githubRepoName.git"
+    githubRepoUrl="https://github.com/$githubUsername/$githubRepoName.git"
     aws cloudformation --region us-east-1 create-stack --stack-name $projectName$stackSuffix --template-body file:///$PWD/aws-scaffold.yml --parameters ParameterKey=ProjectName,ParameterValue=$lowerProjectName ParameterKey=RepositoryType,ParameterValue=Github ParameterKey=GithubRepo,ParameterValue=$githubRepoName ParameterKey=GithubOwner,ParameterValue=$githubUsername ParameterKey=GithubToken,ParameterValue=$githubToken --capabilities CAPABILITY_IAM
 else
     aws cloudformation --region us-east-1 create-stack --stack-name $projectName$stackSuffix --template-body file:///$PWD/aws-scaffold.yml --parameters ParameterKey=ProjectName,ParameterValue=$lowerProjectName --capabilities CAPABILITY_IAM
